@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'uid';
+    protected $primaryKey = 'id';
 
     public $incrementing = false;
 
-    protected $fillable = ['uid', 'userUid', 'action', 'function', 'data', 'ip'];
+    protected $fillable = ['id', 'userId', 'action', 'function', 'data', 'ip'];
 
 }

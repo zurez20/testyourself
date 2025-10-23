@@ -20,8 +20,8 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect('admin/dashboard');
         } else {
-            return view('admin.auth.login');
             Session()->flash('alert-success', "Please login first");
+            return view('admin.auth.login');
         }
         return view('admin.auth.login');
     }
@@ -43,42 +43,28 @@ class AuthController extends Controller
 
         $phone = $request->post('login');
 
-        $result = User::where(['phone' => $phone])->whereNotIn('role', ['customer'])->first();
-
-        $panelRoles = Role::where('panelFlag', 1)->pluck('slug')->toArray();
+        $result = User::where(['phone' => $phone])->first();
 
         if ($result) {
-            if (in_array($result->role, $panelRoles)) {
-
-                if ($result->status == 1 && $result->deleteId == 0) {
-                    if (Hash::check($request->post('password'), $result->password)) {
-                        Auth::login($result);
-                        return response()->json([
-                            'status' => 200,
-                            'message' => 'Logged In Succesfully',
-                        ]);
-                    } else {
-                        Session()->flash('alert-danger', 'Incorrect Password');
-                        return response()->json([
-                            'status' => 201,
-                            'message' => 'Incorrect Password',
-                        ]);
-                    }
-                } else if ($result->status != 1) {
+            if ($result->status == 1) {
+                if (Hash::check($request->post('password'), $result->password)) {
+                    Auth::login($result);
+                    // return redirect('admin/dashboard');
                     return response()->json([
-                        'status' => 204,
-                        'message' => 'User Not active',
+                        'status' => 200,
+                        'message' => 'Logged In Succesfully',
                     ]);
-                } else if ($result->deleteId == 1) {
+                } else {
+                    Session()->flash('alert-danger', 'Incorrect Password');
                     return response()->json([
-                        'status' => 205,
-                        'message' => 'User Deleted',
+                        'status' => 201,
+                        'message' => 'Incorrect Password',
                     ]);
                 }
-            } else {
+            } else if ($result->status != 1) {
                 return response()->json([
-                    'status' => 203,
-                    'message' => 'User Not Authorized',
+                    'status' => 204,
+                    'message' => 'User Not active',
                 ]);
             }
         } else {
@@ -102,8 +88,7 @@ class AuthController extends Controller
 
     public function forgetPassword(Request $request)
     {
-        $roles = Role::where('panelFlag', 1)->pluck('slug')->toArray();
-        $user = User::where('phone', $request->phone)->whereIn('role', $roles)->first();
+        $user = User::where('phone', $request->phone)->first();
         if ($user) {
             return response()->json(['status' => 201, 'message' => 'Phone number found']);
         } else {

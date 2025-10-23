@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class agerange extends Model
+class Agerange extends Model
 {
     //
 }

@@ -26,7 +26,7 @@
 
 @section('content')
 <form autocomplete="off" action="{{url('admin/user/update')}}" enctype="multipart/form-data" method="post" id="updateForm" onsubmit="return checkValidation();">
-    <input type="hidden" value="{{Request::get('userUid')}}" name="userUid">
+    <input type="hidden" value="{{Request::get('userId')}}" name="userId">
     @csrf
     <div class="row g-5 mb-5">
         <!-- Card for Image and Image Alt -->
@@ -111,26 +111,7 @@
                             <span class="text-danger" id="empNoTitle" style="display:none;"></span>
                         </div>
 
-
-                        <div class="col-md-4 fv-row">
-                            <label class="fs-6 fw-semibold mb-2">Select Outlet</label>
-                            <select class="form-select" data-control="select2" data-placeholder="Select Outlet" name="outletUid" id="outletUid">
-                                <option value=""></option>
-                                @foreach($outlets as $outlet)
-                                <option value="{{ $outlet->uid }}" {{ $outlet->uid == $user->outletUid ? 'selected' : '' }}>{{ $outlet->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-4 fv-row">
-                            <label class="required fs-6 fw-semibold mb-2">Select Role</label>
-                            <select class="form-select" data-control="select2" data-hide-search="true" data-placeholder="Select Role" name="role" id="role" validate>
-                                <option value=""></option>
-                                @foreach($roles as $role)
-                                <option value="{{ $role->slug }}" {{ $role->slug == $user->role ? 'selected' : '' }}>{{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

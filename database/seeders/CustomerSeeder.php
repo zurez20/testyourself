@@ -17,10 +17,9 @@ class CustomerSeeder extends Seeder
     {
         $faker = Faker::create();
         
-        // Create 500 records
-        for ($i = 0; $i < 50000; $i++) {
+        // Create 50 records
+        for ($i = 0; $i < 50; $i++) {
             DB::table('customers')->insert([
-                'uid' => Str::uuid(),
                 'fname' => $faker->firstName,
                 'lname' => $faker->lastName,
                 'email' => $faker->unique()->safeEmail,
@@ -28,7 +27,6 @@ class CustomerSeeder extends Seeder
                 'dateOfBirth' => $faker->dateTimeBetween('-50 years', '-18 years')->format('Y-m-d'),
                 'gender' => $faker->randomElement(['Male', 'Female']),
                 'status' => $faker->boolean, // Generates 1 or 0
-                'deleteId' => 0,
                 'createdBy' => $faker->name,
                 'created_at' => $faker->dateTimeBetween('2020-01-01', 'now')->format('Y-m-d H:i:s'),
                 'updated_at' =>  $faker->dateTimeBetween('2020-01-01', 'now')->format('Y-m-d H:i:s'),

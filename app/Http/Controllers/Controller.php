@@ -19,5 +19,35 @@ abstract class Controller
     {
         $this->apiService = $apiService;
     }
+    function uploadFile($request, $fieldName, $uploadpath)
+    {
+        if ($request->hasFile($fieldName)) {
+            $file = $request->file($fieldName);
+            $name = time() . '-' . $fieldName . '-' . $file->getClientOriginalName();
+            $imagePath = $uploadpath . '/' . $name;
+            $file->move($uploadpath, $name);
+            chmod($uploadpath . '/' . $name, 0777);
+            return $imagePath;
+        } else {
+            return null;
+        }
+    }
 
+    // Update File
+    function updateUploadFile($request, $fieldName, $uploadpath, $oldImage)
+    {
+        if ($request->hasFile($fieldName)) {
+            $file = $request->file($fieldName);
+            $name = time() . '-' . $fieldName . '-' . $file->getClientOriginalName();
+            $imagePath = $uploadpath . '/' . $name;
+            $file->move($uploadpath, $name);
+            chmod($uploadpath . '/' . $name, 0777);
+            if (file_exists($oldImage)) {
+                unlink($oldImage);
+            }
+            return $imagePath;
+        } else {
+            return $oldImage;
+        }
+    }
 }

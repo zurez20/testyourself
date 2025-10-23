@@ -26,7 +26,7 @@
 
 @section('content')
 <form autocomplete="off" action="{{url('admin/customer/update')}}" enctype="multipart/form-data" method="post" id="updateForm" onsubmit="return checkValidation();">
-    <input type="hidden" value="{{Request::get('customerUid')}}" name="customerUid">
+    <input type="hidden" value="{{Request::get('customerId')}}" name="customerId">
     @csrf
     <div class="row">
         <div class="col-md-3">

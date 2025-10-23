@@ -15,12 +15,10 @@ return new class extends Migration
     {
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
-                $table->string('uid')->primary();
+                $table->string('id')->primary();
                 $table->string('profileImage')->nullable();
                 $table->string('name')->nullable();
-                $table->string('email')->nullable();
                 $table->string('phone')->nullable();
-                $table->integer('age')->nullable();
                 $table->string('password')->nullable();
                 $table->boolean('status')->default(1);
                 $table->timestamps();
@@ -37,7 +35,7 @@ return new class extends Migration
 
         if (!Schema::hasTable('sessions')) {
             Schema::create('sessions', function (Blueprint $table) {
-                $table->string('uid')->primary();
+                $table->string('id')->primary();
                 $table->foreignId('user_id')->nullable()->index();
                 $table->string('ip_address', 45)->nullable();
                 $table->text('user_agent')->nullable();

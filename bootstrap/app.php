@@ -12,9 +12,6 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            // Route::prefix('admin')
-            //     ->name('admin')
-            //     ->group(base_path('routes/admin.php'));
 
             Route::middleware('web')
                 ->prefix('admin')
@@ -28,8 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->validateCsrfTokens(except: [
             'admin/auth',
-            '/login',
-            '/logout',
+            'admin/login',
+            'admin/logout',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

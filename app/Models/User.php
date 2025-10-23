@@ -10,10 +10,10 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $primaryKey = 'uid'; // Define the primary key
+    protected $primaryKey = 'id'; // Define the primary key
 
-    public $incrementing = false;  // If 'uid' is not auto-incrementing
-    protected $keyType = 'string'; // If 'uid' is a string
+    public $incrementing = false;  // If 'id' is not auto-incrementing
+    protected $keyType = 'string'; // If 'id' is a string
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'uid',
+        'id',
         'name',
         'profileImage',
         'role',
@@ -59,33 +59,5 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->fname . ' ' . $this->lname;
-    }
-
-    public function rolee()
-    {
-        return $this->hasOne(Role::class, 'slug', 'role');
-    }
-    public function customeraddress()
-    {
-        return $this->hasMany(Customeraddress::class, 'customerUid', 'uid');
-    }
-
-    public function influencerproduct()
-    {
-        return $this->hasMany(Product::class, 'influencerUid', 'uid');
-    }
-    public function influencerimgmedia()
-    {
-        return $this->hasMany(Influencermedia::class, 'influencerUid', 'uid')->where('type', 'Image')->orderBy('sequence', 'ASC');
-    }
-
-    public function influencervideomedia()
-    {
-        return $this->hasMany(Influencermedia::class, 'influencerUid', 'uid')->where('type', 'Video')->orderBy('sequence', 'ASC');
-    }
-
-    public function influencermedia()
-    {
-        return $this->hasMany(Influencermedia::class, 'influencerUid', 'uid')->orderBy('sequence', 'ASC');
     }
 }

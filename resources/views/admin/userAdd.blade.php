@@ -55,15 +55,6 @@
                             <label class="fs-6 fw-semibold mb-2"> Image Alt</label>
                             <input type="text" class="form-control txtOnly" placeholder="Enter Alt" id="profileImageAlt" name="profileImageAlt">
                         </div>
-                        <div class="col-md-12 fv-row g-5 mb-5 mt-4">
-                            <label class="required fs-6 fw-semibold mb-2">Select Role</label>
-                            <select class="form-select" data-control="select2" data-hide-search="true" data-placeholder="Select Role" name="role" id="role" onchange="displayPass()" validate>
-                                <option value=""></option>
-                                @foreach($roles as $role)
-                                <option value="{{ $role->slug }}">{{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -93,21 +84,6 @@
                             <label class="required fs-6 fw-semibold mb-2">Email</label>
                             <input type="text" class="form-control " placeholder="Enter Email" id="email" name="email" onkeyup="checkemail('userEmail')" data-validation="email" data-title="Email" validate>
                             <span class="text-danger" id="emailtitle"></span>
-                        </div>
-                        <div class="col-md-4 fv-row">
-                            <label class="fs-6 fw-semibold mb-2">Select Outlet</label>
-                            <select class="form-select" data-control="select2" data-placeholder="Select Outlet" name="outletUid" id="outletUid">
-                                <option value=""></option>
-                                @foreach($outlets as $outlet)
-                                <option value="{{ $outlet->uid }}">{{ $outlet->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-3 fv-row">
-                            <label class="required fs-6 fw-semibold mb-2">Employee Number</label>
-                            <input type="text" class="form-control space" placeholder="Enter Employee Number" id="empNo" name="empNo" onkeyup="checkempNo('userEmpNO')" data-validation="empNo" data-title="Employee No" validate>
-                            <span id="emptitle" style="display:none;color:red;"></span>
                         </div>
 
                         <div class="col-md-3 fv-row">
@@ -416,23 +392,6 @@
         } else {
             document.getElementById('redSpecial').style.display = 'none';
             document.getElementById('greenSpecial').style.display = 'block';
-        }
-    }
-</script>
-
-<!-- Display Password Field -->
-<script>
-    var roles = @json($roles);
-
-    function displayPass() {
-        var role = $('#role').val();
-        var panelRoles = roles.find(panelRoles => panelRoles.slug == role);
-        if(panelRoles.panelFlag == 1){
-            $('#passwordField').show();
-            $('#Password').attr('validate', true);
-        }else{
-            $('#passwordField').hide();
-            $('#Password').removeAttr('validate');
         }
     }
 </script>
