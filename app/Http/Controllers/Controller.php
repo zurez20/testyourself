@@ -23,31 +23,51 @@ abstract class Controller
     {
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
+            $uploadDir = public_path($uploadpath);
+
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
             $name = time() . '-' . $fieldName . '-' . $file->getClientOriginalName();
             $imagePath = $uploadpath . '/' . $name;
-            $file->move($uploadpath, $name);
-            chmod($uploadpath . '/' . $name, 0777);
+            $file->move($uploadDir, $name);
+            chmod($uploadDir . '/' . $name, 0777);
+
             return $imagePath;
-        } else {
-            return null;
         }
+
+        return null;
     }
+
 
     // Update File
     function updateUploadFile($request, $fieldName, $uploadpath, $oldImage)
     {
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
+
+            // Absolute path
+            $uploadDir = public_path($uploadpath);
+
+            // Create dir if needed
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
             $name = time() . '-' . $fieldName . '-' . $file->getClientOriginalName();
             $imagePath = $uploadpath . '/' . $name;
-            $file->move($uploadpath, $name);
-            chmod($uploadpath . '/' . $name, 0777);
-            if (file_exists($oldImage)) {
-                unlink($oldImage);
+
+            // Move and set permissions
+            $file->move($uploadDir, $name);
+            chmod($uploadDir . '/' . $name, 0777);
+
+            // Delete old file safely
+            $oldFilePath = public_path($oldImage);
+            if (file_exists($oldFilePath) && is_writable($oldFilePath)) {
+                @unlink($oldFilePath);
             }
+
             return $imagePath;
-        } else {
-            return $oldImage;
         }
     }
 }

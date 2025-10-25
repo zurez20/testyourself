@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    Shop Users
+    Users
 @endsection
 
 @section('header')
 @endsection
 
 @section('breadcrumb')
-    <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">Shop Users</h1>
+    <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">Users</h1>
     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
         <li class="breadcrumb-item text-muted">
             <a href="{{ url('admin/dashboard') }}" class="text-muted text-hover-primary">Dashboard</a>
@@ -16,7 +16,7 @@
         <li class="breadcrumb-item">
             <span class="bullet bg-gray-200 w-5px h-2px"></span>
         </li>
-        <li class="breadcrumb-item text-dark">Shop Users</li>
+        <li class="breadcrumb-item text-dark">Users</li>
     </ul>
 @endsection
 
@@ -48,12 +48,12 @@
                     <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sketchy-1/5.png" />
                 </div>
                 <div class="card-px text-center py-20 ">
-                    <p class="text-gray-400 fs-4 fw-semibold mb-10">Looks like you do not have any users here.
+                    <p class="text-gray-400 fs-4 fw-semibold mb-10">Looks like you do not have any users added here.
                         <br />If you want to add a user, click on the button below.
                     </p>
                     </p>
-                    <a type="button" href="{{ url('admin/user/add') }}" class="btn btn-primary">
-                        <span class="svg-icon svg-icon-3">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal"><span
+                            class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5"
@@ -63,9 +63,8 @@
                                 <rect x="6.01041" y="10.9247" width="12" height="2" rx="1"
                                     fill="currentColor" />
                             </svg>
-                        </span>
-                        Add User
-                    </a>
+                        </span>Add User
+                    </button>
                 </div>
             </div>
         </div>
@@ -90,7 +89,7 @@
                 </div>
                 <div class="card-toolbar">
                     <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                        <a type="button" href="{{ url('admin/user/add') }}" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal">
                             <span class="svg-icon svg-icon-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -103,7 +102,7 @@
                                 </svg>
                             </span>
                             Add User
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -115,7 +114,6 @@
                             <th class="text-center min-w-25px">#</th>
                             <th class="text-center min-w-25px">Profile Image</th>
                             <th class="text-center min-w-125px">Full Name</th>
-                            <th class="text-center min-w-125px">Email</th>
                             <th class="text-center min-w-125px">Phone</th>
                             <th class="text-center min-w-50px">Status</th>
                             <th class="text-center min-w-70px">Actions</th>
@@ -138,9 +136,6 @@
                                     {{ $data->name }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $data->email }}
-                                </td>
-                                <td class="text-center">
                                     {{ $data->phone }}
                                 </td>
                                 <td class="text-center">
@@ -156,13 +151,9 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="align-middle text-center">
-                                        <a class="btn btn-icon btn-outline-warning has-ripple"
-                                            href="{{ 'admin/user/update?userId=' . $data->id }}"
-                                            style="border-radius: 50%;"><i class="fas fa-pen"></i></a>
                                         <a class="btn btn-icon btn-outline-danger has-ripple" data-bs-toggle="modal"
-                                            onclick="openDeleteModal('{{ $data->id }}')"
-                                            data-bs-target="#deleteModal" style="border-radius: 50%;"><i
-                                                class="far fa-trash-alt"></i></a>
+                                            onclick="openDeleteModal('{{ $data->id }}')" data-bs-target="#deleteModal"
+                                            style="border-radius: 50%;"><i class="far fa-trash-alt"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -171,51 +162,259 @@
                 </table>
             </div>
         </div>
-    @endif
 
 
-    <!--delete modal start-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete User</h5>
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <span class="svg-icon svg-icon-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                    transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                    transform="rotate(45 7.41422 6)" fill="currentColor" />
-                            </svg>
-                        </span>
+        <!--create modal start-->
+        <div class="modal fade addclearonclose" id="addmodal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content rounded">
+                    <div class="modal-header">
+                        <h1 class="modal-tital w-100 text-center"> Add User </h1>
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <span class="svg-icon svg-icon-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                        transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                        transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </div>
                     </div>
+                    <form autocomplete="off" action="{{ url('admin/user/add') }}" enctype="multipart/form-data"
+                        method="post" id="addForm">
+                        <div class="modal-body scroll-y px-10 px-lg-15 pt-0">
+                            @csrf
+                            <div class="row g-5 mb-5">
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-semibold my-2">Profile Image</label>
+                                    <div class="d-flex flex-center flex-column py-3 mb-1">
+                                        <div class="image-input image-input-outline" data-kt-image-input="true">
+                                            <div class="image-input-wrapper w-125px h-125px"
+                                                style="background-image: url('assets/media/blankimg.svg')"></div>
+                                            <label
+                                                class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                                title="Change Icon">
+                                                <i class="bi bi-pencil-fill fs-7"></i>
+                                                <input type="file" name="profileImage" accept="image/*" />
+                                                <input type="hidden" name="avatar_remove" />
+                                            </label>
+                                        </div>
+                                        <div class="form-text">Allowed all image file types
+                                            .webp is preferred for better performance
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 fv-row ">
+                                    <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                    <input type="text" class="form-control txtOnly space" placeholder="Enter Name"
+                                        id="name" name="name" validate>
+                                </div>
+
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">Phone</label>
+                                    <input type="text" class="form-control numOnly" placeholder="Enter Phone"
+                                        id="phone" name="phone" maxlength="10" data-title="Phone No" validate>
+                                </div>
+
+                                <div class="col-md-6 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2 ">Status</label>
+                                    <select class="form-select " data-control="select2" data-hide-search="true"
+                                        name="status">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </div>
+
+                                <!-- Password Field -->
+                                <div class="col-md-6 fv-row" id="passwordField">
+                                    <label class="required fs-6 fw-semibold mb-2">Password</label>
+                                    <input type="password" class="form-control" onkeyup="validatePass()" id="Password"
+                                        name="password" placeholder="Enter Password" data-title="Password" /><br>
+                                    <div class="row">
+                                        <div class="col-sm-1 text-center">
+                                            <i id="redCapital" class="fas fa-times text-danger"></i>
+                                            <i id="greenCapital" class="fas fa-check"
+                                                style="color: green; display: none;"></i>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label>1 Capital letter</label>
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <i id="redSmall" class="fas fa-times text-danger"></i>
+                                            <i id="greenSmall" class="fas fa-check"
+                                                style="color: green; display: none;"></i>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label>1 small letter</label>
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <i id="redNumber" class="fas fa-times text-danger"></i>
+                                            <i id="greenNumber" class="fas fa-check"
+                                                style="color: green; display: none;"></i>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label>1 Number</label>
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <i id="redSpecial" class="fas fa-times text-danger"></i>
+                                            <i id="greenSpecial" class="fas fa-check"
+                                                style="color: green; display: none;"></i>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label>1 Special character</label>
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <i id="red8charac" class="fas fa-times text-danger"></i>
+                                            <i id="green8charac" class="fas fa-check"
+                                                style="color: green; display: none;"></i>
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <label>Password should contain at least 8 characters</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="addBtn">
+                                <span class="indicator-label">Add</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form action="{{ url('admin/user/delete') }}" id="deleteForm" method="post">
-                    @csrf
-                    <input type="hidden" name="userId" id="deleteUserId">
-                    <div class="modal-body">
-                        <span>Are you sure you want to delete user <span id="userName"></span> ? <br> Action cannot be
-                            reverted.</span>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" data-bs-dismiss="modal" class="btn btn-light me-3">No</button>
-                        <button type="submit" id="delYes" class="btn btn-danger">
-                            Yes
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
-    <!--delete modal end-->
+        <!--create modal end-->
+
+        <!--delete modal start-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete User</h5>
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <span class="svg-icon svg-icon-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                        transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                        transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <form action="{{ url('admin/user/delete') }}" id="deleteForm" method="post">
+                        @csrf
+                        <input type="hidden" name="userId" id="deleteUserId">
+                        <div class="modal-body">
+                            <span>Are you sure you want to delete user <span id="userName"></span> ? <br> Action
+                                cannot be
+                                reverted.</span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" data-bs-dismiss="modal" class="btn btn-light me-3">No</button>
+                            <button type="submit" id="delYes" class="btn btn-danger">
+                                Yes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--delete modal end-->
+    @endif
 
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+
+    <!-- Modals -->
+    <script>
+        let users = @json($users);
+        var config = {
+            placeholderblank: 'assets/media/blankimg.svg'
+        };
+
+        function openDeleteModal(userId) {
+            let user = users.find(x => x.id == userId);
+            $('#deleteUserId').val(user.id);
+        }
+
+        document.getElementById('addForm').onsubmit = function(e) {
+            document.getElementById('addBtn').disabled = true;
+        };
+    </script>
+
+    <!-- password fields -->
+    <script>
+        function validatePass() {
+            var pass = document.getElementById('Password').value;
+
+            // Regex for password criteria
+            var hasUpperCase = /[A-Z]/.test(pass);
+            var hasLowerCase = /[a-z]/.test(pass);
+            var hasNumbers = /[0-9]/.test(pass);
+            var hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+            var isValidLength = pass.length >= 8;
+
+            // Check password length
+            if (!isValidLength) {
+                document.getElementById('red8charac').style.display = 'block';
+                document.getElementById('green8charac').style.display = 'none';
+            } else {
+                document.getElementById('red8charac').style.display = 'none';
+                document.getElementById('green8charac').style.display = 'block';
+            }
+
+            // Check for capital letters
+            if (!hasUpperCase) {
+                document.getElementById('redCapital').style.display = 'block';
+                document.getElementById('greenCapital').style.display = 'none';
+            } else {
+                document.getElementById('redCapital').style.display = 'none';
+                document.getElementById('greenCapital').style.display = 'block';
+            }
+
+            // Check for small letters
+            if (!hasLowerCase) {
+                document.getElementById('redSmall').style.display = 'block';
+                document.getElementById('greenSmall').style.display = 'none';
+            } else {
+                document.getElementById('redSmall').style.display = 'none';
+                document.getElementById('greenSmall').style.display = 'block';
+            }
+
+            // Check for numbers
+            if (!hasNumbers) {
+                document.getElementById('redNumber').style.display = 'block';
+                document.getElementById('greenNumber').style.display = 'none';
+            } else {
+                document.getElementById('redNumber').style.display = 'none';
+                document.getElementById('greenNumber').style.display = 'block';
+            }
+
+            // Check for special characters
+            if (!hasSpecialChar) {
+                document.getElementById('redSpecial').style.display = 'block';
+                document.getElementById('greenSpecial').style.display = 'none';
+            } else {
+                document.getElementById('redSpecial').style.display = 'none';
+                document.getElementById('greenSpecial').style.display = 'block';
+            }
+        }
+    </script>
+
     <!-- data table  -->
     <script>
         var KTAppEcommerceCategories = function() {
@@ -241,15 +440,123 @@
             KTAppEcommerceCategories.init()
         }));
     </script>
-
-    <!-- Modals -->
     <script>
-        var users = @json($users);
+        var KTModalAdd = function() {
+            var t, e, o, n, r, i;
+            return {
+                init: function() {
+                    r = document.querySelector("#addForm"),
+                        t = r.querySelector("#addBtn"),
+                        n = FormValidation.formValidation(r, {
+                            fields: {
+                                profileImage: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: "Profile Image is required"
+                                        },
+                                    }
+                                },
+                                name: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: "Name is required"
+                                        },
+                                        stringLength: {
+                                            max: 256,
+                                            message: "Name must be less than 256 characters"
+                                        }
+                                    }
+                                },
+                                phone: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: "Phone is required"
+                                        },
+                                        stringLength: {
+                                            min: 10,
+                                            message: "Phone does not meet Indian Standard"
+                                        }
+                                    }
+                                },
+                                password: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: "Password is required"
+                                        },
+                                        callback: {
+                                            message: "Password must meet all criteria: at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
+                                            callback: function(value) {
+                                                const pass = value.value; // Get the password value
+                                                const hasUpperCase = /[A-Z]/.test(pass);
+                                                const hasLowerCase = /[a-z]/.test(pass);
+                                                const hasNumbers = /[0-9]/.test(pass);
+                                                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+                                                const isValidLength = pass.length >= 8;
 
-        function openDeleteModal(id) {
-            var user = users.find(x => x.id == id);
-            $('#deleteUserId').val(user.id);
-            $('#userName').html(user.fname + ' ' + user.lname);
-        }
+                                                // Return valid only if all criteria are met
+                                                return {
+                                                    valid: hasUpperCase && hasLowerCase && hasNumbers &&
+                                                        hasSpecialChar && isValidLength,
+                                                    message: "Password must meet all criteria: at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+                                                };
+                                            }
+                                        }
+                                    }
+                                },
+                            },
+                            plugins: {
+                                trigger: new FormValidation.plugins.Trigger,
+                                bootstrap: new FormValidation.plugins.Bootstrap5({
+                                    rowSelector: ".fv-row",
+                                    eleInvalidClass: "",
+                                    eleValidClass: ""
+                                })
+                            }
+                        }), r.querySelectorAll('.space').forEach(function(input) {
+                            input.addEventListener('input', function() {
+                                this.value = this.value.trimStart();
+                            });
+                        });
+
+                    t.addEventListener("click", function(e) {
+                        e.preventDefault();
+
+                        // Trim spaces on all .space fields (both input and textarea)
+                        r.querySelectorAll('.space').forEach(function(input) {
+                            input.value = input.value.trim();
+                        });
+
+                        n && n.validate().then(function(e) {
+                            console.log("validated!"),
+                                "Valid" == e ? (
+                                    t.disabled = !0,
+                                    setTimeout(function() {
+                                        e.isConfirmed && (t.disabled = !1);
+
+                                        // Submit form
+                                        r.submit();
+
+                                    }, 0)) : Swal.fire({
+                                    text: "Sorry, looks like there are some missing fields, please try again.",
+                                    icon: "error",
+                                    buttonsStyling: !1,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    }
+                                });
+                        });
+                    });
+
+                    $('select').change(function() {
+                        var fieldName = $(this).attr('name');
+                        n.revalidateField(fieldName);
+                    });
+                }
+            }
+        }();
+        KTUtil.onDOMContentLoaded((function() {
+            KTModalAdd.init()
+        }));
     </script>
 @endsection
