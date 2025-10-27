@@ -144,29 +144,46 @@ class AdminController extends Controller
     }
     public function indexQuestion()
     {
-        $questions = Question::with('category','agerange','answers')->orderBy('created_at', 'desc')->get();
+        $questions = Question::with('category', 'agerange', 'answers')->orderBy('created_at', 'desc')->get();
+        $categories = Category::where('status', 1)->orderBy('created_at', 'desc')->get();
+        $ageranges = Agerange::where('status', 1)->orderBy('created_at', 'desc')->get();
         // return $questions;
-        return view('admin.question', compact('questions'));
+        return view('admin.question', compact('questions', 'categories', 'ageranges'));
     }
 
     public function addQuestion(Request $request)
     {
-        $agerange = new Agerange();
-        $agerange->icon = $this->uploadFile($request, 'icon', 'media/adminImages/ageranges');
-        $agerange->name = $request->name;
-        $agerange->desc = $request->description;
-        $agerange->status = $request->status;
-        $agerange->save();
+        $question = new Question();
+        $question->question = $request->question;
+        $question->categoryId = $request->categoryId;
+        $question->ageRangeId = $request->agerangeId;
+        $question->save();
 
-        Session()->flash('alert-success', "AgeRange Added Successfully");
+        foreach ($request->answers as $key => $ans) {
+            $answer = new Answer();
+            $answer->questionId = $question->id;
+            $answer->answer = $ans;
+            $answer->isCorrect = ($key + 1 == $request->correct_answer) ? 1 : 0;
+            $answer->save();
+        }
+
+        Session()->flash('alert-success', "Question and Answers Added Successfully");
         return redirect()->back();
     }
+
     public function deleteQuestion(Request $request)
     {
-        $agerange = Agerange::find($request->agerangeId);
-        $agerange->delete();
+        $question = Question::find($request->questionId);
 
-        Session()->flash('alert-danger', "AgeRange Deleted Successfully");
+        if ($question) {
+            Answer::where('questionId', $question->id)->delete();
+            $question->delete();
+
+            Session()->flash('alert-danger', "Question and its Answers Deleted Successfully");
+        } else {
+            Session()->flash('alert-warning', "Question not found");
+        }
+
         return redirect()->back();
     }
 }

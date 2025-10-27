@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-   Question & Answer 
+    Question & Answer
 @endsection
 
 @section('header')
@@ -47,15 +47,15 @@
 
 
     <!-- table -->
-    @if ($ageranges->count() == 0)
+    @if ($questions->count() == 0)
         <div class="card">
             <div class="card-body p-0">
                 <div class="text-center px-4">
                     <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sketchy-1/5.png" />
                 </div>
                 <div class="card-px text-center py-20 ">
-                    <p class="text-gray-400 fs-4 fw-semibold mb-10">Looks like you do not have any ageranges added here.
-                        <br />If you want to add a agerange, click on the button below.
+                    <p class="text-gray-400 fs-4 fw-semibold mb-10">Looks like you do not have any questions added here.
+                        <br />If you want to add a question, click on the button below.
                     </p>
                     </p>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal"><span
@@ -117,49 +117,54 @@
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="data_table">
                     <thead>
                         <tr class="text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                            <th class="text-center min-w-50px">Icon</th>
-                            <th class="text-center min-w-50px">Name</th>
-                            <th class="text-center min-w-50px">Desc</th>
-                            <th class="text-center min-w-50px">Status</th>
+                            <th class="text-center min-w-50px">Sr. No</th>
+                            <th class="text-center min-w-50px">Questions</th>
+                            <th class="text-center min-w-50px">Answers</th>
                             <th class="text-center min-w-50px">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="fw-semibold text-gray-600">
-                        <?php $i = 1; ?>
-                        @foreach ($ageranges as $data)
+                        @foreach ($questions as $index => $data)
                             <tr>
+                                <td class="text-center">{{ $index + 1 }}</td>
+
+                                <!-- Question -->
                                 <td class="text-center">
-                                    <div class="symbol symbol-50px">
-                                        <img src="{{ $data->icon != null ? $data->icon : 'assets/media/blankimg.svg' }}" />
-                                    </div>
+                                    {{ $data->question ?? 'Not Found' }}
                                 </td>
+
+                                <!-- Answers -->
                                 <td class="text-center">
-                                    {{ $data->name ?? 'Not Found' }}
-                                </td>
-                                <td class="text-center">
-                                    {{ $data->desc ?? 'Not Found' }}
-                                </td>
-                                <td class="text-center">
-                                    @if ($data->status == 1)
-                                        <div class="badge badge-light-success">
-                                            Active
-                                        </div>
+                                    @if ($data->answers->count() > 0)
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach ($data->answers as $answer)
+                                                <li class="{{ $answer->isCorrect ? 'text-success fw-bold' : '' }}">
+                                                    {{ $answer->answer }}
+                                                    @if ($answer->isCorrect)
+                                                        <span class="badge bg-success ms-1">Correct</span>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     @else
-                                        <div class="badge badge-light-danger">
-                                            Inactive
-                                        </div>
+                                        <span class="text-muted">No answers added</span>
                                     @endif
                                 </td>
+
+                                <!-- Actions -->
                                 <td class="text-center">
                                     <div class="align-middle text-center">
                                         <a class="btn btn-icon btn-outline-danger has-ripple" data-bs-toggle="modal"
                                             onclick="openDeleteModal('{{ $data->id }}')" data-bs-target="#deleteModal"
-                                            style="border-radius: 50%;"><i class="far fa-trash-alt"></i></a>
+                                            style="border-radius: 50%;">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -169,7 +174,7 @@
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content rounded">
                 <div class="modal-header">
-                    <h1 class="modal-tital w-100 text-center"> Add Question & Answer </h1>
+                    <h1 class="modal-title w-100 text-center">Add Question & Answers</h1>
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -182,68 +187,74 @@
                         </span>
                     </div>
                 </div>
-                <form autocomplete="off" action="{{ url('admin/agerange/add') }}" enctype="multipart/form-data"
+
+                <form autocomplete="off" action="{{ url('admin/question/add') }}" enctype="multipart/form-data"
                     method="POST" id="addForm">
+                    @csrf
                     <div class="modal-body scroll-y px-10 px-lg-15 pt-0">
-                        @csrf
                         <div class="row g-5 mt-2">
-                            <div class="col-md-12 fv-row">
-                                <label class="required fs-6 fw-semibold mb-1">Icon</label>
-                                <div class="d-flex flex-center flex-column py-2 mb-1">
-                                    <div class="image-input image-input-outline" data-kt-image-input="true"
-                                        style="background-image: url('assets/media/blankimg.svg')">
-                                        <div class="image-input-wrapper w-125px h-125px"
-                                            style="background-image: url('assets/media/blankimg.svg')"></div>
-                                        <label
-                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                            title="Add Icon">
-                                            <i class="bi bi-pencil-fill fs-7"></i>
-                                            <input type="file" name="icon" accept="image/*" />
-                                            <input type="hidden" name="avatar_remove" />
-                                        </label>
-                                        <span
-                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                            title="Cancel Icon">
-                                            <i class="bi bi-x fs-2"></i>
-                                        </span>
-                                    </div>
-                                    <div class="form-text">Allowed all image file types
-                                        .webp is preffered for better performance
-                                    </div>
-                                </div>
+                            <div class="col-md-12 fv-row mt-5">
+                                <label class="required fs-6 fw-semibold mb-2">Question</label>
+                                <input type="text" class="form-control" placeholder="Enter Question" id="question"
+                                    name="question" required>
                             </div>
-                            <div class="col-md-6 fv-row g-5 mt-5">
-                                <label class="required fs-6 fw-semibold mb-2">Question & Answer Name</label>
-                                <input type="text" class="form-control txtOnly space" placeholder="Enter Name"
-                                    id="name" name="name">
-                            </div>
+
                             <div class="col-md-6 fv-row">
-                                <label class="fs-6 fw-semibold mb-2">Status</label>
-                                <select class="form-select" data-control="select2" data-hide-search="true"
-                                    name="status" id="Status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                <label class="fs-6 fw-semibold mb-2">Category</label>
+                                <select class="form-select" name="categoryId" id="categoryId" data-control="select2"
+                                    data-hide-search="true">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-12 fv-row">
-                                <label class="fs-6 fw-semibold mb-2">Description</label>
-                                <textarea class="form-control space" placeholder="Enter Description" id="description" name="description"></textarea>
+
+                            <div class="col-md-6 fv-row">
+                                <label class="fs-6 fw-semibold mb-2">Age Range</label>
+                                <select class="form-select" name="agerangeId" id="agerangeId" data-control="select2"
+                                    data-hide-search="true">
+                                    @foreach ($ageranges as $agerange)
+                                        <option value="{{ $agerange->id }}">{{ $agerange->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <hr class="mt-5 mb-0">
+
+                            <div class="col-md-12 mt-5">
+                                <label class="fs-5 fw-bold mb-3">Answers</label>
+
+                                @for ($i = 1; $i <= 4; $i++)
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" type="radio" name="correct_answer"
+                                                value="{{ $i }}" id="correct_answer_{{ $i }}"
+                                                required>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                            placeholder="Enter Answer {{ $i }}" name="answers[]"
+                                            id="answer_{{ $i }}" required>
+                                    </div>
+                                @endfor
+
+                                <small class="text-muted">Select one answer as correct.</small>
                             </div>
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="addBtn">
-                            <span class="indicator-label">Add</span>
+                            <span class="indicator-label">Add Question</span>
                             <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <!--create modal end-->
 
     <!--delete modal start-->
@@ -265,11 +276,11 @@
                         </span>
                     </div>
                 </div>
-                <form action="{{ url('admin/agerange/delete') }}" id="deleteForm" method="post">
+                <form action="{{ url('admin/question/delete') }}" id="deleteForm" method="post">
                     @csrf
-                    <input type="hidden" id="agerangeId" name="agerangeId">
+                    <input type="hidden" id="questionId" name="questionId">
                     <div class="modal-body">
-                        <span>Are you sure you want to delete this agerange ? <br> Action cannot be reverted</span>
+                        <span>Are you sure you want to delete this question ? <br> Action cannot be reverted</span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">No</button>
@@ -285,14 +296,14 @@
 @section('scripts')
     <!-- Modals -->
     <script>
-        let ageranges = @json($ageranges);
+        let questions = @json($questions);
         var config = {
             placeholderblank: 'assets/media/blankimg.svg'
         };
 
-        function openDeleteModal(agerangeId) {
-            let agerange = ageranges.find(x => x.id == agerangeId);
-            $('#agerangeId').val(agerange.id);
+        function openDeleteModal(questionId) {
+            let question = questions.find(x => x.id == questionId);
+            $('#questionId').val(question.id);
         }
     </script>
 
@@ -306,17 +317,10 @@
                         t = r.querySelector("#addBtn"),
                         n = FormValidation.formValidation(r, {
                             fields: {
-                                icon: {
+                                question: {
                                     validators: {
                                         notEmpty: {
-                                            message: "Question & Answer icon is required"
-                                        },
-                                    }
-                                },
-                                name: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: "Name is required"
+                                            message: "Question is required"
                                         },
                                         stringLength: {
                                             max: 256,
