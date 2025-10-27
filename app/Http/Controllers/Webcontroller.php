@@ -68,15 +68,12 @@ class Webcontroller extends Controller
 
     public function login(Request $request)
     {
-       logger($request->all()); 
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
         if (Auth::guard('player')->attempt($credentials)) {
-            logger($request);
-            logger("logged in");
             $request->session()->regenerate();
             return redirect('/agegroup')->with('success', 'Welcome back!');
         }
