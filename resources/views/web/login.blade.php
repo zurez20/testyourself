@@ -94,20 +94,34 @@
     <div class="login-box text-center">
         <div class="logo-text mb-3">Test Yourself</div>
         <h4 class="mb-4">Welcome Back!</h4>
-        <form method="POST" action="{{ route('player.login') }}">
-    @csrf
-    <div class="mb-3 text-start">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
-    </div>
-    <div class="mb-3 text-start">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
-    </div>
-    <button type="submit" class="btn btn-orange w-100 mt-3">Login</button>
-</form>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="mb-3 text-start">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
+            </div>
+            <div class="mb-3 text-start">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter password"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-orange w-100 mt-3">Login</button>
+        </form>
 
         <p class="mt-4 mb-0">Don't have an account? <a href="{{ url('register') }}" class="text-decoration-none"
                 style="color: #f97316;">Join now</a></p>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            @if (session('success'))
+                toastr.success("{{ session('success') }}");
+            @endif
+
+            @if (session('error'))
+                toastr.error("{{ session('error') }}");
+            @endif
+        });
+    </script>
 @endsection

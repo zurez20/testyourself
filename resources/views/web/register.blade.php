@@ -51,21 +51,21 @@
             <div class="mb-3 text-start">
                 <label for="name" class="form-label">Full Name</label>
                 <input type="text" name="name" class="form-control" id="name" placeholder="Enter your full name"
-                    required>
+                    >
             </div>
             <div class="mb-3 text-start">
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" >
             </div>
             <div class="mb-3 text-start">
                 <label for="password" class="form-label">Create Password</label>
                 <input type="password" name="password" class="form-control" id="password" placeholder="Create password"
-                    required>
+                    >
             </div>
             <div class="mb-3 text-start">
                 <label for="password_confirmation" class="form-label">Confirm Password</label>
                 <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
-                    placeholder="Re-enter password" required>
+                    placeholder="Re-enter password" >
             </div>
             <button type="submit" class="btn btn-oranges w-100 mt-3">Register</button>
         </form>
@@ -74,4 +74,53 @@
         <p class="mt-4 mb-0">Already have an account? <a href="{{ url('/login') }}" class="text-decoration-none"
                 style="color: #f97316">Log in</a></p>
     </div>
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('password_confirmation');
+
+            form.addEventListener('submit', function(e) {
+                let errors = [];
+
+                // Basic full name validation
+                if (name.value.trim() === '') {
+                    errors.push("Full Name is required.");
+                }
+
+                // Basic email validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email.value.trim() === '') {
+                    errors.push("Email is required.");
+                } else if (!emailPattern.test(email.value.trim())) {
+                    errors.push("Please enter a valid email address.");
+                }
+
+                // Password validation
+                if (password.value.trim() === '') {
+                    errors.push("Password is required.");
+                } else if (password.value.length < 6) {
+                    errors.push("Password must be at least 6 characters long.");
+                }
+
+                // Confirm Password validation
+                if (confirmPassword.value.trim() === '') {
+                    errors.push("Confirm Password is required.");
+                } else if (password.value !== confirmPassword.value) {
+                    errors.push("Passwords do not match.");
+                }
+
+                // Show errors using toastr and stop form submission
+                if (errors.length > 0) {
+                    e.preventDefault();
+                    errors.forEach(err => toastr.error(err));
+                }
+            });
+
+        });
+    </script>
 @endsection

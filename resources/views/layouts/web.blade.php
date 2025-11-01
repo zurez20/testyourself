@@ -12,10 +12,16 @@
 
     <!-- AOS Animation CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </head>
 
 <body>
-    <!-- ✅ Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm py-3">
         <div class="container">
             <a class="navbar-brand fw-bold fs-4" href="#">
@@ -36,11 +42,23 @@
                         <a class="nav-link" href="{{ url('/howtoplay') }}">How to Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/category') }}">Quiz Category</a>
+                        <a class="nav-link" href="{{ url('/category') }}">Test Yourself</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/my-results') }}">Scoreboard</a>
+                    </li>
+                    @if (Auth::guard('player')->check())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+                        </li>
+                    @endif
                 </ul>
                 @if (Auth::guard('player')->check())
-                    <h1>{{ Auth::guard('player')->user()->name }}</h1>
+                    {{-- Please Make this look better --}}
+                    <div class="d-flex align-items-center ms-3">
+                        <i class="bi bi-person-circle text-warning fs-5 me-2"></i>
+                        <span class="fw-semibold text-dark">{{ Auth::guard('player')->user()->name }}</span>
+                    </div>
                 @else
                     <div class="d-flex">
                         <a href="{{ url('login') }}" class="btn btn-outline-dark me-2">Log in</a>
@@ -62,7 +80,8 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    @section('script')
+    @show
 </body>
 
 </html>
