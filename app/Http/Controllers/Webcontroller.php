@@ -84,7 +84,7 @@ class Webcontroller extends Controller
 
         Auth::guard('player')->login($player);
 
-        return redirect('/agegroup')->with('success', 'Registration successful!');
+        return redirect('/category')->with('success', 'Registration successful!');
     }
 
     public function login(Request $request)

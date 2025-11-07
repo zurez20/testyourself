@@ -11,7 +11,7 @@
                 <h1>Unlock Exclusive <br><span>Rewards</span> as <span class="win">You Win</span></h1>
                 <p>Dive into the ultimate quiz experience – a blend of excitement, learning, and triumph. Quizzes: it’s
                     more than a game.</p>
-                <a href="" class="start-btn">Start solving</a>
+                <a href="/category" class="start-btn">Start solving</a>
             </div>
             <div class="right">
                 <img src="{{ asset('assets/media/images/image1.png') }}"alt="Girl winning" />
@@ -22,30 +22,22 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container cards">
-            <a href="../3dcoverage/3d.html">
-                <div class="card" data-aos="fade-up" data-aos-delay="100">
-                    <h3>3D Coverage</h3>
-                    <p>3-dimensional coverage of all questions <br>related to a particular topic</p>
-                </div>
-            </a>
-            <a href="{{url('/subject')  }}">
-                <div class="card" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Plenty of subjects</h3>
-                    <p>Computer languages, engineering <br> subjects and more!</p>
-                </div>
-            </a>
-            <a href="../solution/solution.html">
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Detailed solutions</h3>
-                    <p>Deep explanation to get better <br>understanding of topics</p>
-                </div>
-            </a>
-            <a href="../earth/earth.html">
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Earth of subjects</h3>
-                    <p>Explore a wide variety of topics in your <br> domain of interest</p>
-                </div>
-            </a>
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <h3>3D Coverage</h3>
+                <p>3-dimensional coverage of all questions <br>related to a particular topic</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <h3>Plenty of subjects</h3>
+                <p>Computer languages, engineering <br> subjects and more!</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <h3>Detailed solutions</h3>
+                <p>Deep explanation to get better <br>understanding of topics</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <h3>Earth of subjects</h3>
+                <p>Explore a wide variety of topics in your <br> domain of interest</p>
+            </div>
         </div>
     </section>
 
@@ -177,7 +169,7 @@
         <div class="container text-center">
             <h2>Ready to Challenge Yourself?</h2>
             <p class="lead">Join thousands of users improving their knowledge every day!</p>
-            <a href="{{url('register')}}" class="btn btn-light mt-3 px-4 py-2">Join Now</a>
+            <a href="{{ url('register') }}" class="btn btn-light mt-3 px-4 py-2">Join Now</a>
         </div>
     </section>
 @endsection

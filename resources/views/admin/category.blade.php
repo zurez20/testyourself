@@ -410,13 +410,6 @@
                         t = r.querySelector("#addBtn"),
                         n = FormValidation.formValidation(r, {
                             fields: {
-                                icon: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: "Category icon is required"
-                                        },
-                                    }
-                                },
                                 name: {
                                     validators: {
                                         notEmpty: {

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    Users
+    Admin
 @endsection
 
 @section('header')
 @endsection
 
 @section('breadcrumb')
-    <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">Users</h1>
+    <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">Admin</h1>
     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
         <li class="breadcrumb-item text-muted">
             <a href="{{ url('admin/dashboard') }}" class="text-muted text-hover-primary">Dashboard</a>
@@ -16,7 +16,7 @@
         <li class="breadcrumb-item">
             <span class="bullet bg-gray-200 w-5px h-2px"></span>
         </li>
-        <li class="breadcrumb-item text-dark">Users</li>
+        <li class="breadcrumb-item text-dark">Admin</li>
     </ul>
 @endsection
 
@@ -48,8 +48,8 @@
                     <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sketchy-1/5.png" />
                 </div>
                 <div class="card-px text-center py-20 ">
-                    <p class="text-gray-400 fs-4 fw-semibold mb-10">Looks like you do not have any users added here.
-                        <br />If you want to add a user, click on the button below.
+                    <p class="text-gray-400 fs-4 fw-semibold mb-10">Looks like you do not have any admin added here.
+                        <br />If you want to add an admin, click on the button below.
                     </p>
                     </p>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal"><span
@@ -63,7 +63,7 @@
                                 <rect x="6.01041" y="10.9247" width="12" height="2" rx="1"
                                     fill="currentColor" />
                             </svg>
-                        </span>Add User
+                        </span>Add Admin
                     </button>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                             </svg>
                         </span>
                         <input type="text" data-kt-customer-table-filter="search" class="form-control w-250px ps-15"
-                            placeholder="Search User" />
+                            placeholder="Search Admin" />
                     </div>
                 </div>
                 <div class="card-toolbar">
@@ -101,7 +101,7 @@
                                         fill="currentColor" />
                                 </svg>
                             </span>
-                            Add User
+                            Add Admin
                         </button>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
             <div class="modal-dialog modal-dialog-centered mw-650px">
                 <div class="modal-content rounded">
                     <div class="modal-header">
-                        <h1 class="modal-tital w-100 text-center"> Add User </h1>
+                        <h1 class="modal-tital w-100 text-center"> Add Admin </h1>
                         <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                             <span class="svg-icon svg-icon-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -299,7 +299,7 @@
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Delete User</h5>
+                        <h5 class="modal-title">Delete Admin</h5>
                         <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                             <span class="svg-icon svg-icon-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -316,7 +316,7 @@
                         @csrf
                         <input type="hidden" name="userId" id="deleteUserId">
                         <div class="modal-body">
-                            <span>Are you sure you want to delete user <span id="userName"></span> ? <br> Action
+                            <span>Are you sure you want to delete admin <span id="userName"></span> ? <br> Action
                                 cannot be
                                 reverted.</span>
                         </div>

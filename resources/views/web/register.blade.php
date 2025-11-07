@@ -76,51 +76,57 @@
     </div>
 @endsection
 @section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const password = document.getElementById('password');
-            const confirmPassword = document.getElementById('password_confirmation');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('password_confirmation');
+        const submitBtn = form.querySelector('button[type="submit"]');
 
-            form.addEventListener('submit', function(e) {
-                let errors = [];
+        form.addEventListener('submit', function(e) {
+            let errors = [];
 
-                // Basic full name validation
-                if (name.value.trim() === '') {
-                    errors.push("Full Name is required.");
-                }
+            // Basic full name validation
+            if (name.value.trim() === '') {
+                errors.push("Full Name is required.");
+            }
 
-                // Basic email validation
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (email.value.trim() === '') {
-                    errors.push("Email is required.");
-                } else if (!emailPattern.test(email.value.trim())) {
-                    errors.push("Please enter a valid email address.");
-                }
+            // Basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.value.trim() === '') {
+                errors.push("Email is required.");
+            } else if (!emailPattern.test(email.value.trim())) {
+                errors.push("Please enter a valid email address.");
+            }
 
-                // Password validation
-                if (password.value.trim() === '') {
-                    errors.push("Password is required.");
-                } else if (password.value.length < 6) {
-                    errors.push("Password must be at least 6 characters long.");
-                }
+            // Password validation
+            if (password.value.trim() === '') {
+                errors.push("Password is required.");
+            } else if (password.value.length < 6) {
+                errors.push("Password must be at least 6 characters long.");
+            }
 
-                // Confirm Password validation
-                if (confirmPassword.value.trim() === '') {
-                    errors.push("Confirm Password is required.");
-                } else if (password.value !== confirmPassword.value) {
-                    errors.push("Passwords do not match.");
-                }
+            // Confirm Password validation
+            if (confirmPassword.value.trim() === '') {
+                errors.push("Confirm Password is required.");
+            } else if (password.value !== confirmPassword.value) {
+                errors.push("Passwords do not match.");
+            }
 
-                // Show errors using toastr and stop form submission
-                if (errors.length > 0) {
-                    e.preventDefault();
-                    errors.forEach(err => toastr.error(err));
-                }
-            });
+            // If any error, show toastr & prevent submission
+            if (errors.length > 0) {
+                e.preventDefault();
+                errors.forEach(err => toastr.error(err));
+                return;
+            }
 
+            // ✅ Disable the button after successful validation
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Registering...'; // Optional loading text
+            submitBtn.classList.add('opacity-75'); // Optional fade effect
         });
-    </script>
+    });
+</script>
 @endsection

@@ -119,6 +119,8 @@
                         <tr class="text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th class="text-center min-w-50px">Sr. No</th>
                             <th class="text-center min-w-50px">Questions</th>
+                            <th class="text-center min-w-50px">Age Range</th>
+                            <th class="text-center min-w-50px">Category</th>
                             <th class="text-center min-w-50px">Answers</th>
                             <th class="text-center min-w-50px">Actions</th>
                         </tr>
@@ -133,6 +135,13 @@
                                     {{ $data->question ?? 'Not Found' }}
                                 </td>
 
+                                <td class="text-center">
+                                    {{ $data->agerange->name ?? 'Not Found' }}
+                                </td>
+
+                                <td class="text-center">
+                                    {{ $data->category->name ?? 'Not Found' }}
+                                </td>
                                 <!-- Answers -->
                                 <td class="text-center">
                                     @if ($data->answers->count() > 0)

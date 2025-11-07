@@ -306,13 +306,6 @@
                         t = r.querySelector("#addBtn"),
                         n = FormValidation.formValidation(r, {
                             fields: {
-                                icon: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: "Age Range icon is required"
-                                        },
-                                    }
-                                },
                                 name: {
                                     validators: {
                                         notEmpty: {

@@ -150,7 +150,7 @@
 
                             <div class="menu-item pt-5">
                                 <div class="menu-content">
-                                    <span class="menu-heading fw-bold text-uppercase fs-7">User</span>
+                                    <span class="menu-heading fw-bold text-uppercase fs-7">Admin</span>
                                 </div>
                             </div>
 
@@ -175,7 +175,7 @@
                                             </svg>
                                         </span>
                                     </span>
-                                    <span class="menu-title">User Management</span>
+                                    <span class="menu-title">Admin Management</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
@@ -185,7 +185,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Users</span>
+                                            <span class="menu-title">Admins</span>
                                         </a>
                                     </div>
                                 </div>
