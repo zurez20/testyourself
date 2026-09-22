@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
-            $table->integer('ageRangeId')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

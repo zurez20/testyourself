@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('playeranswers', function (Blueprint $table) {
             $table->id();
             $table->integer('playerId')->nullable();
+            $table->integer('categoryId')->nullable();
+            $table->integer('ageRangeId')->nullable();
             $table->integer('resultId')->nullable();
             $table->integer('questionId')->nullable();
             $table->integer('selectedAnswerId')->nullable();
             $table->integer('correctAnswerId')->nullable();
-            $table->boolean('isCorrect')->boolean(0);
+            $table->boolean('isCorrect')->default(0);
             $table->timestamps();
         });
     }

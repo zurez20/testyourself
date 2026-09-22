@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('ageranges', function (Blueprint $table) {
             $table->id();
-            $table->integer('ageRangeId')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('name')->nullable();
             $table->text('desc')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();

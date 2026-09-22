@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff9f3;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-brand span {
+    color: #f97316;
+    /* Orange */
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #f97316;
+}
+
+.btn-outline-dark {
+    border-color: #333;
+    color: #333;
+}
+
+.btn-outline-dark:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-warning {
+    background-color: #f97316;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e65c00;
+}
+
+/* Hero Section */
+.hero {
+    padding: 60px 0;
+    background-color: #e0c4a8;
+}
+
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.left {
+    max-width: 600px;
+}
+
+.left h1 {
+    font-size: 40px;
+    line-height: 1.4;
+}
+
+.left h1 span {
+    color: #f97316;
+}
+
+.left .win {
+    color: #10b981;
+}
+
+.left p {
+    margin: 20px 0;
+    font-size: 18px;
+    color: #444;
+}
+
+.start-btn {
+    background-color: #f97316;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+/* Image */
+.right img {
+    width: 400px;
+    border-radius: 20px;
+}
+
+/* Features Section */
+.features {
+    background-color: #fff;
+    padding: 60px 0;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    background-color: #f0f4f8;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1;
+    min-width: 220px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+    color: #ff5722;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #333;
+}

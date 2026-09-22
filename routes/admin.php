@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  return redirect('login');
+  return redirect('admin/login');
 });
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -48,7 +48,6 @@ Route::middleware(['checkUser'])->group(function () {
     function () {
       Route::get('/', [AdminController::class, 'indexAgerange']);
       Route::post('/add', [AdminController::class, 'addAgerange']);
-      Route::post('/update', [AdminController::class, 'updateAgerange']);
       Route::post('/delete', [AdminController::class, 'deleteAgerange']);
     },
   );
@@ -60,7 +59,6 @@ Route::middleware(['checkUser'])->group(function () {
     function () {
       Route::get('/', [AdminController::class, 'indexQuestion']);
       Route::post('/add', [AdminController::class, 'addQuestion']);
-      Route::post('/update', [AdminController::class, 'updateQuestion']);
       Route::post('/delete', [AdminController::class, 'deleteQuestion']);
     },
   );
@@ -71,7 +69,6 @@ Route::middleware(['checkUser'])->group(function () {
     ],
     function () {
       Route::get('/', [AdminController::class, 'indexPlayer']);
-      Route::post('/add', [AdminController::class, 'addPlayer']);
       Route::post('/update', [AdminController::class, 'updatePlayer']);
       Route::post('/delete', [AdminController::class, 'deletePlayer']);
     },

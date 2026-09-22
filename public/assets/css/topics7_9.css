@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4e3cd;
+    color: #333;
+}
+
+/* Header */
+.header {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.header span {
+    color: #ff9900;
+}
+
+.header p {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+/* Back Button */
+.back-btn {
+    display: inline-block;
+    margin: 20px 0;
+    text-decoration: none;
+    color: #f97316;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid #f97316;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #f97316;
+    color: #fff;
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Individual Card */
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 280px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #ff6600;
+}
+
+.card p {
+    font-size: 15px;
+    color: #666;
+}
+
+.card button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 2px solid #ff6600;
+    color: #ff6600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card button:hover {
+    background-color: #ff6600;
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .header {
+        flex-direction: column;
+        align-items: start;
+    }
+}

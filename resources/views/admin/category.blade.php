@@ -410,13 +410,6 @@
                         t = r.querySelector("#addBtn"),
                         n = FormValidation.formValidation(r, {
                             fields: {
-                                icon: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: "Category icon is required"
-                                        },
-                                    }
-                                },
                                 name: {
                                     validators: {
                                         notEmpty: {
@@ -584,9 +577,5 @@
         KTUtil.onDOMContentLoaded((function() {
             KTAppEcommerceCategories.init()
         }));
-
-        document.addEventListener("DOMContentLoaded", function() {
-            initDataTablesWithoutActionsSorting("#data_table");
-        });
     </script>
 @endsection

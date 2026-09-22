@@ -28,6 +28,7 @@ class AdminController extends Controller
 
     public function addUser(Request $request)
     {
+        // dd($request->all());
         $user = new User();
         $user->profileImage = $this->uploadFile($request, 'profileImage', 'media/adminImages/users');
         $user->name = $request->name;
@@ -37,20 +38,6 @@ class AdminController extends Controller
         $user->save();
 
         Session()->flash('alert-success', "User Added Successfully");
-        return redirect()->back();
-    }
-
-    public function updateUser(Request $request)
-    {
-        $user = User::find($request->userId);
-        $user->profileImage = $this->updateUploadFile($request, 'profileImage', 'media/adminImages/users', $user->profileImage);
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->role = $request->role;
-        $user->status = $request->status;
-        $user->update();
-
-        Session()->flash('alert-success', "User Updated Successfully");
         return redirect()->back();
     }
 
@@ -110,26 +97,10 @@ class AdminController extends Controller
         return view('admin.player', compact('players'));
     }
 
-    public function addPlayer(Request $request)
-    {
-        $players = new Player();
-        $players->name = $request->name;
-        $players->email = $request->email;
-        $players->password = Hash::make($request->password);
-        $players->ageRangeId = $request->ageRangeId;
-        $players->status = $request->status;
-        $players->save();
-
-        Session()->flash('alert-success', "Player Added Successfully");
-        return redirect()->back();
-    }
-
     public function updatePlayer(Request $request)
     {
         $players = Player::find($request->playerId);
         $players->name = $request->name;
-        $players->email = $request->email;
-        $players->ageRangeId = $request->ageRangeId;
         $players->status = $request->status;
         $players->update();
 
@@ -154,35 +125,65 @@ class AdminController extends Controller
     public function addAgerange(Request $request)
     {
         $agerange = new Agerange();
+        $agerange->icon = $this->uploadFile($request, 'icon', 'media/adminImages/ageranges');
         $agerange->name = $request->name;
-        $agerange->email = $request->email;
-        $agerange->ageRangeId = $request->ageRangeId;
+        $agerange->desc = $request->description;
         $agerange->status = $request->status;
         $agerange->save();
 
         Session()->flash('alert-success', "AgeRange Added Successfully");
         return redirect()->back();
     }
-
-    public function updateAgerange(Request $request)
-    {
-        $agerange = Agerange::find($request->agerangeId);
-        $agerange->name = $request->name;
-        $agerange->email = $request->email;
-        $agerange->ageRangeId = $request->ageRangeId;
-        $agerange->status = $request->status;
-        $agerange->update();
-
-        Session()->flash('alert-success', "AgeRange Updated Successfully");
-        return redirect()->back();
-    }
-
     public function deleteAgerange(Request $request)
     {
         $agerange = Agerange::find($request->agerangeId);
         $agerange->delete();
 
         Session()->flash('alert-danger', "AgeRange Deleted Successfully");
+        return redirect()->back();
+    }
+    public function indexQuestion()
+    {
+        $questions = Question::with('category', 'agerange', 'answers')->orderBy('created_at', 'desc')->get();
+        $categories = Category::where('status', 1)->orderBy('created_at', 'desc')->get();
+        $ageranges = Agerange::where('status', 1)->orderBy('created_at', 'desc')->get();
+        // return $questions;
+        return view('admin.question', compact('questions', 'categories', 'ageranges'));
+    }
+
+    public function addQuestion(Request $request)
+    {
+        $question = new Question();
+        $question->question = $request->question;
+        $question->categoryId = $request->categoryId;
+        $question->ageRangeId = $request->agerangeId;
+        $question->save();
+
+        foreach ($request->answers as $key => $ans) {
+            $answer = new Answer();
+            $answer->questionId = $question->id;
+            $answer->answer = $ans;
+            $answer->isCorrect = ($key + 1 == $request->correct_answer) ? 1 : 0;
+            $answer->save();
+        }
+
+        Session()->flash('alert-success', "Question and Answers Added Successfully");
+        return redirect()->back();
+    }
+
+    public function deleteQuestion(Request $request)
+    {
+        $question = Question::find($request->questionId);
+
+        if ($question) {
+            Answer::where('questionId', $question->id)->delete();
+            $question->delete();
+
+            Session()->flash('alert-danger', "Question and its Answers Deleted Successfully");
+        } else {
+            Session()->flash('alert-warning', "Question not found");
+        }
+
         return redirect()->back();
     }
 }
